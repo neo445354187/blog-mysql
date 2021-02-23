@@ -3224,7 +3224,7 @@ b. 乐观锁：顾名思义，对数据操作比较乐观，持积极态度。�
 在MySQL中，一般在表中多建一个version字段，作为版本信息，用于最后提交时比较
 
 c. 
- 	    行锁	表锁	页锁
+ 	    行锁	    表锁	    页锁
 MyISAM	     	√	 
 BDB	 	        √	    √
 InnoDB	 √	    √	 
@@ -3318,7 +3318,9 @@ deleted_bit，删除标记位，删除时设置;为了节省磁盘空间，InnoD
 ### 分析并发事务数据操作思路
 1. 确定是什么时候开始建立tranaction id和一致性读视图的，注意`start transaction`和
     `start transaction with consistent snapshot`的区别
+
 2. 分析具体事务中一致性读视图情况，比如获取的活跃事务id数组情况，重点注意：只有普通读采用这个哈
+
 3. 按时间先后顺序依次分析具体操作
     重点注意：只有简单的select才是快照读，而增删改和加锁读都是当前读，操作实际数据
     需要考虑排他锁的一些机制，比如：只有等先获取到排他锁的事务提交或回滚后，才能继续操作数据
@@ -3326,8 +3328,7 @@ deleted_bit，删除标记位，删除时设置;为了节省磁盘空间，InnoD
 ### 额外说明
 1. 增删改查单独语句其实就是一个事务
 
-参考：<https://www.cnblogs.com/eternityz/p/12443278.html>
-参考：<https://blog.csdn.net/dome_/article/details/90514673>
-参考：<https://blog.csdn.net/u011212394/article/details/85056686>
-参考：<https://blog.csdn.net/hla199106/article/details/99683010>
-
+- 参考：<https://www.cnblogs.com/eternityz/p/12443278.html>
+- 参考：<https://blog.csdn.net/dome_/article/details/90514673>
+- 参考：<https://blog.csdn.net/u011212394/article/details/85056686>
+- 参考：<https://blog.csdn.net/hla199106/article/details/99683010>
